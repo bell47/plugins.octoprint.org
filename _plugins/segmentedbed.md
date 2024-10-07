@@ -27,6 +27,7 @@ tags:
 - heatbed
 
 # When registering a plugin on plugins.octoprint.org, all screenshots should be uploaded not linked from external sites.
+screenshots:
 - url: /assets/img/plugins/segmentedbed/segmentedbed.png
   alt: Snapshot of segmented bed UI
   caption: Snapshot of segmented bed UI
