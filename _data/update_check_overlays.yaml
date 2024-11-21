@@ -17,7 +17,7 @@ filamentmanager:
 klipper:
   user: AliceGrey
 costestimation:
-  user: OllisGit
+  user: Hillshum
 filamentreload:
   user: nickmitchko
 eeprom_marlin:
