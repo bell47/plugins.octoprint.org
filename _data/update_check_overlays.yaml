@@ -18,6 +18,7 @@ klipper:
   user: AliceGrey
 costestimation:
   user: Hillshum
+  pip: https://github.com/Hillshum/OctoPrint-CostEstimation/releases/download/{target_version}/master.zip
 filamentreload:
   user: nickmitchko
 eeprom_marlin:
