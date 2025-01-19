@@ -32,6 +32,11 @@ screenshots:
   caption: Alexa Response
 
 featuredimage: /assets/img/plugins/octovox/alexa_response.png
+compatibility:
+  python: '>=2.7,<4'
+
+attributes:
+- cloud
 
 ---
 

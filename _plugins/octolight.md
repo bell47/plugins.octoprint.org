@@ -3,8 +3,9 @@ layout: plugin
 
 id: octolight
 title: OctoLight
-description: A simple plugin, that add's a button to the navbar, toggleing GPIO on the RPi. It can be used for turning on and off a light.
+description: A simple plugin to toggle a GPIO pin on a RPi. This can be toggled through a onscreen button, external button, printer events or custom GCODE.
 authors:
+- Steven Thomson
 - Žiga Kralj
 #- second autor name
 license: AGPLv3
@@ -12,9 +13,9 @@ license: AGPLv3
 # today's date in format YYYY-MM-DD, e.g.
 date: 2021-01-18
 
-homepage: https://github.com/gigibu5/OctoLight
-source: https://github.com/gigibu5/OctoLight
-archive: https://github.com/gigibu5/OctoLight/archive/master.zip
+homepage: https://github.com/thomst08/OctoLight
+source: https://github.com/thomst08/OctoLight
+archive: https://github.com/thomst08/OctoLight/archive/master.zip
 
 # Set this to true if your plugin uses the dependency_links setup parameter to include
 # library versions not yet published on pypi. SHOULD ONLY BE USED IF THERE IS NO OTHER OPTION!
@@ -81,4 +82,81 @@ compatibility:
 
 ---
 
-A simple plugin that adds a button to the navigation bar for toggleing a GPIO pin on the Raspberry Pi. I use it for turning ON and OFF the light on my 3D printer.
+A simple plugin that allows for the toggling of a GPIO pin on the Raspberry Pi. The user can toggle the pin through a button in the navigation bar, an external button, OctoPrint events and through custom GCODE commands. Printer events also allow the pin to be toggled on then off after a period of time.
+
+![WebUI interface](/assets/img/plugins/octolight/screenshoot.png)
+
+
+## Configuration
+![Settings panel](/assets/img/plugins/octolight/settings_main.png)
+
+### Main Light Settings
+Currently, you can configure settings:
+- `Light PIN`: The pin on the Raspberry Pi that the button controls.
+	- Default value: 13
+	- The pin number is saved in the **board layout naming** scheme (gray labels on the pinout image below).
+	- **!! IMPORTANT !!** The Raspberry Pi can only control the **GPIO** pins (orange labels on the pinout image below)
+	- **!! IMPORTANT !!** OctoLight will detect if the GPIO mode is set by another plugin, if not, the GPIO will be set to ``BOARD`` mode, else it will use ``BCM`` mode.  If the GPIO's are in BCM mode, you will need to use the GPIO number instead of the pin number, for example, pin 13 is GPIO 27, so the pin should be set to 27.
+	![Raspberry Pi GPIO](/assets/img/plugins/octolight/rpi_gpio.png)
+
+- `Inverted output`: If true, the output will be inverted.
+	- Usage: If you have a light, that is turned off when voltage is applied to the pin (wired in negative logic), you should turn on this option, so the light isn't on when you reboot your Raspberry Pi.
+
+- `Treat light pin as a button`: If true, the output will be treated as a button press.
+	- Usage: This function allows OctoLight to toggle the Raspberry Pi pin on and off with a small delay to allow for lights that require a button press to change states.
+
+- `Button Press delay (ms)`: This sets a time out for how long a button press is, this is only used if `Light is a button` is enabled.
+	- Default value: 200
+	- Note: This value is in micro seconds.
+
+- `Delay Light Off (mins)`: This sets a time out for when the light will automatically turn its self-off in an event.
+	- Default value: 5
+	- Note: This value is in minutes.
+
+<br />
+
+![Settings panel](/assets/img/plugins/octolight/settings_button.png)
+
+### External Button Settings
+
+- `Enable External button`: This allows the use of an external button to change the state of the light.
+	- This setting is not enabled by default, this setting must be on to use an external button
+
+- `Button PIN`: The pin on the Raspberry Pi used to detect a button press.
+	- Default value: 15
+	- The pin number is saved in the **board layout naming** scheme (gray labels on the pinout image).
+	- **!! IMPORTANT !!** The Raspberry Pi can only control the **GPIO** pins (orange labels on the pinout image)
+	- **!! IMPORTANT !!** OctoLight will detect if the GPIO mode is set by another plugin, if not, the GPIO will be set to ``BOARD`` mode, else it will use ``BCM`` mode.  If the GPIO's are in BCM mode, you will need to use the GPIO number instead of the pin number, for example, pin 15 is GPIO 22, so the pin should be set to 22.
+
+- `Button pin is connected to v5`: This sets the button pin to detect when the pin receives a current
+	- The default is disabled
+	- If you button pin is connected to a button that is connected to a ground pin, this setting should be disabled.  However, if you connect the button to a v5 pin, this setting must be enabled.
+
+<br />
+
+![Settings panel](/assets/img/plugins/octolight/settings_event.png)
+
+### Event Settings
+
+- `Setup Printer and OctoPrint Events`: This allows you to select what you would like the light to do on a printer event.
+	- There are multiple events, these can each be tweaked based on your desired preference.
+	- Default is set to 'Nothing'.
+	- Set the light to do nothing, turn on, turn off, or turn on then turn itself off after the delay time value.
+
+<br />
+
+![Settings panel](/assets/img/plugins/octolight/settings_gcode.png)
+
+### Custom GCODE Settings
+
+- `Enable Custom GCODE Detection`: This must be enabled for GCODE to be read and toggle the light.
+	- If this option is disabled, then the custom GCODE bellow this option will not function.
+
+- `Setup Custom GCODE`: This allows you to select what you would like the light to do when a set GCODE command is sent to the printer.
+	- Default is 'OCTOLIGHT ON', 'OCTOLIGHT OFF' and 'OCTOLIGHT DELAY OFF' for on, off and on with a delayed turn off respectively.
+	- These commands can be any command the user enters, these could be event commands for the printer (e.g.: M600) or custom commands.
+
+
+## API
+
+**Note:** OctoLight supports API calls, please go to the following link to check the latest information: https://github.com/thomst08/OctoLight#api

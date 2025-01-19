@@ -4,14 +4,16 @@ layout: plugin
 id: webhooks
 title: OctoPrint-Webhooks
 description: This allows you to send a webhook to any URL when events happen on OctoPrint.
-author: Blane Townsend
+authors: 
+- Derek Antrican
+- Blane Townsend
 license: AGPLv3
 
 date: 2020-04-29
 
-homepage: https://github.com/2blane/OctoPrint-Webhooks
-source: https://github.com/2blane/OctoPrint-Webhooks
-archive: https://github.com/2blane/OctoPrint-Webhooks/archive/master.zip
+homepage: https://github.com/derekantrican/OctoPrint-Webhooks
+source: https://github.com/derekantrican/OctoPrint-Webhooks
+archive: https://github.com/derekantrican/OctoPrint-Webhooks/archive/master.zip
 
 tags:
 - webhook
@@ -33,7 +35,14 @@ featuredimage: /assets/img/plugins/webhooks/Featured.png
 compatibility:
   python: ">=2.7,<4"
 
+attributes:
+- cloud
+
 ---
+
+# *NOTE: this plugin has been abandoned by the original creator and adopted here by a new maintainer*
+
+For now, the below is preserved as the former README (except for a change to the setup URL)
 
 # OctoPrint-Webhooks
 
@@ -51,7 +60,7 @@ I wrote a blog post to explain more about what this plugin is and why I built it
 Install via the bundled [Plugin Manager](https://docs.octoprint.org/en/master/bundledplugins/pluginmanager.html)
 or manually using this URL:
 
-    https://github.com/2blane/OctoPrint-Webhooks/archive/master.zip
+    https://github.com/derekantrican/OctoPrint-Webhooks/archive/master.zip
 
 Once you've installed the plugin, go to the settings page for this plugin. The page is called "Webhooks".
 Select which events will trigger a webhook, then change the following:

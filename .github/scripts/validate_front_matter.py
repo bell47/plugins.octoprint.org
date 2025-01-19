@@ -8,9 +8,9 @@ import click
 import colorama
 import frontmatter
 import pkg_resources
-from voluptuous import All, Invalid, Length, Optional, Required, Schema, Url
+from voluptuous import All, Any, Invalid, Length, Optional, Required, Schema, Url
 
-OCTOPRINT_PY3_SUPPORT = ("3.7", "3.8", "3.9")
+OCTOPRINT_PY3_SUPPORT = ("3.7", "3.8", "3.9", "3.10", "3.11", "3.12")
 
 NonEmptyString = All(str, Length(min=1))
 
@@ -79,6 +79,7 @@ SCHEMA = Schema(
         Required("homepage"): Url(),
         Required("source"): Url(),
         Required("archive"): Url(),
+        Optional("privacypolicy"): Url(),
         Optional("follow_dependency_links"): bool,
         Optional("tags"): list,
         Optional("screenshots"): All([ScreenshotDef]),
@@ -88,6 +89,7 @@ SCHEMA = Schema(
         Optional("abandoned"): NonEmptyString,
         Optional("up_for_adoption"): Url(),
         Optional("redirect_from"): NonEmptyString,
+        Optional("attributes"): Any(list, None),
     }
 )
 
@@ -363,10 +365,13 @@ def main(
         )
     )
     if action_output:
-        print("::set-output name=files::{}".format(count))
-        print("::set-output name=passes::{}".format(count - fails))
-        print("::set-output name=fails::{}".format(fails))
-        print("::set-output name=warns::{}".format(warns))
+        github_output = os.environ.get("GITHUB_OUTPUT")
+        if github_output:
+            with open(github_output, "a", encoding="utf-8") as f:
+                print("files={}".format(count), file=f)
+                print("passes={}".format(count - fails), file=f)
+                print("fails={}".format(fails), file=f)
+                print("warns={}".format(warns), file=f)
 
     if fails != 0:
         sys.exit(-1)

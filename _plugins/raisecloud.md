@@ -13,6 +13,8 @@ homepage: https://github.com/Raise3D/Octoprint-Raisecloud
 source: https://github.com/Raise3D/Octoprint-Raisecloud
 archive: https://github.com/Raise3D/Octoprint-Raisecloud/archive/master.zip
 
+privacypolicy: https://www.raise3d.com/legal/privacy-policy/
+
 tags:
 - remote monitoring
 - webcam
@@ -50,6 +52,11 @@ compatibility:
   - windows
 
   python: ">=2.7,<4"
+
+attributes:
+- cloud
+- commercial
+- free-tier
 
 ---
 

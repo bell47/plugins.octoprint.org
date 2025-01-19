@@ -14,6 +14,8 @@ homepage: https://simplyprint.io/
 source: https://github.com/SimplyPrint/OctoPrint-SimplyPrint/
 archive: https://github.com/SimplyPrint/OctoPrint-SimplyPrint/archive/master.zip
 
+privacypolicy: https://simplyprint.io/legal/en/privacy
+
 tags:
 - cloud
 - simplyprint
@@ -45,6 +47,11 @@ featuredimage: /assets/img/plugins/SimplyPrint/showcase_feature_image.png
 
 compatibility:
   python: ">=2.7,<4"
+
+attributes:
+- cloud
+- commercial
+- free-tier
 
 ---
 

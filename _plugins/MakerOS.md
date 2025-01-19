@@ -33,6 +33,12 @@ screenshots:
   caption: The settings for the MakerOS plugin
 
 featuredimage: /assets/img/plugins/MakerOS/Octoprint-Makeros-projects.png
+compatibility:
+  python: '>=2.7,<4'
+
+attributes:
+- cloud
+- commercial
 
 ---
 

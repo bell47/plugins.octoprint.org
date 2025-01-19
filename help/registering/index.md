@@ -22,6 +22,11 @@ editing it accordingly.
     Exception: Fetching additional Python dependencies from the Python Package Index through `plugin_requires` in your
     `setup.py` is fine.
 
+  * If your plugin heavily interacts with any kind of cloud services, your plugin must now link to a Privacy Policy through
+    `privacypolicy` in your registration file and `__plugin_privacypolicy__` in your `setup.py`. The goal is to give
+    users access to your Privacy Policy and thus information on how you use their data and what data you use in
+    what fashion *prior* to them installing your plugin.
+
   * If your plugin interacts with external services it will do so over secured connections with a valid certificate only
     (`https://someservice.com` instead of `http://130.47.11.15`). This also includes embedding any kinds of iframes in
     the web interface. Also include this kind of information in the plugin's long description (see below)!
@@ -85,9 +90,12 @@ If all is in the green, follow these steps:
     # today's date in format YYYY-MM-DD, e.g.
     date: 2015-06-22
 
-    homepage: your plugin's homepage
-    source: your plugin's source repository
+    homepage: your plugin's homepage URL
+    source: your plugin's source repository URL
     archive: archive link to install your plugin via pip, e.g. from github: https://github.com/username/repository/archive/master.zip
+
+    # Set this if your plugin heavily interacts with any kind of cloud services.
+    #privacypolicy: your plugin's privacy policy URL
 
     # Set this to true if your plugin uses the dependency_links setup parameter to include
     # library versions not yet published on pypi. SHOULD ONLY BE USED IF THERE IS NO OTHER OPTION!
@@ -166,6 +174,14 @@ If all is in the green, follow these steps:
       #python: ">=2.7,<3" # Python 2 & 3
       #python: ">=3,<4" # Python 3 only
 
+    # TODO
+    # If any of the below attributes apply to your project, uncomment the corresponding lines. This is MANDATORY!
+    
+    attributes:
+    #  - cloud  # if your plugin requires access to a cloud to function
+    #  - commercial  # if your plugin has a commercial aspect to it
+    #  - free-tier  # if your plugin has a free tier
+
     ---
 
     Longer description of your plugin, configuration examples etc. This part will be visible on the page at
@@ -220,8 +236,18 @@ If all is in the green, follow these steps:
         ``fetch_yt_preview`` bash script included in the repository. If you use the latter you can leave out the
         ``preview`` parameter to the include.
 
-    If you are unsure about how something should be structured take a look at the existing plugins or
-    [ask on the forum](https://community.octoprint.org/c/development).
+      * Make sure the ``archive`` URL is **always pointing to the latest release**. OctoPrint uses that URL for initial installation
+        of the plugin from the Plugin Manager (regardless of the version shown there). If you are using GitHub and the URL points
+        to ``<project url>/archive/your_branch.zip`` (``master``, ``main`` are commonly used as branch name) adjust your
+        branching strategy to **only** have latest release there.
+
+      * If your plugin **requires a cloud to function, has a commercial aspect to it and/or has a free tier** you *must*
+        mark it as such using the ``attributes`` property. If you are unsure about whether your plugin qualifies as being
+        commercial, ask for clarification on that in your registration pull request. Please note that commercial plugins are 
+        excluded from the public stats after some cases of manipulation.
+
+    If you are unsure about how something should be structured, take a look at the existing plugins or
+    [ask on the forum](https://community.octoprint.org/c/development) or in your registration pull request.
 
  4. Ideally, you'll test that your plugin gets listed correctly and the plugin page looks
     as expected. For this you'll need to install [Jekyll](http://jekyllrb.com/), which is what [Github Pages](https://pages.github.com/) and hence
